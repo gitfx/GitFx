@@ -1,11 +1,10 @@
 import os
-import sys
 import subprocess
 
-from parse_funcs import parse
+from gitfx import parse_funcs
 
 
-ROOT_DIR = os.getenv('GITHUB_WORKSPACE', os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.getenv('GITHUB_WORKSPACE', os.getcwd())
 
 SUPPORTED_LANGS = [
         'ruby',
@@ -48,11 +47,11 @@ def run_fun(func_path, func):
     if func_file_name.strip() == '':
         return ""
 
-    # pre_hook script is a shell script that start with a same name of
+    # before_script is a shell script that start with a same name of
     # the function file but ends with '.sh',
     # will be run before the function running
-    pre_hook_file = func_file_name + '.sh'
-    run_pre_hook = '[ -f {0} ] && sh {0} >/dev/null 2>&1'.format(pre_hook_file)
+    before_script_file = func_file_name + '.sh'
+    run_before_script = '[ -f {0} ] && sh {0} >/dev/null 2>&1'.format(before_script_file)
 
     deps_install = {
         'ruby': '[ -f Gemfile ] && bundle install >/dev/null 2>&1',
@@ -68,7 +67,7 @@ def run_fun(func_path, func):
                docker_image(func_lang) + ':latest', 'sh', '-c',
                "cd " + os.path.relpath(func_path, ROOT_DIR) + ";" +
                deps_install.get(func_lang, ':') + ";" +
-               run_pre_hook + ";" +
+               run_before_script + ";" +
                RUN_CMDS[func_lang] + " " + func_file_name]
 
     output = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
@@ -101,14 +100,12 @@ def print_github_raw_url(file_path):
         print(raw_url)
 
 
-if __name__ == "__main__":
-    # func_path is a path where the functions locate
-    func_path = ROOT_DIR
-    if len(sys.argv) > 1:
-        func_path = sys.argv[1]
+def run(func_path):
+    if not func_path:
+        func_path = ROOT_DIR
     func_path = os.path.abspath(func_path)
 
-    funcs = parse(func_path)
+    funcs = parse_funcs.parse(func_path)
 
     for func in funcs:
         routes = func['routes']
@@ -118,9 +115,9 @@ if __name__ == "__main__":
             if routes[0]['action'] != 'GET':
                 continue
             result = run_fun(func_path, func)
-            print(result)
             if result.strip() == '':
                 continue
+            print(result)
             write_to_route(result, routes[0]['route'])
         else:
             results = run_fun(func_path, func)

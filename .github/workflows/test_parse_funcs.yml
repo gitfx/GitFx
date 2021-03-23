@@ -10,5 +10,5 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: funcs parse
-      run: python3 parse_funcs.py test/func_samples/
+      run: python3 gitfx/parse_funcs.py test/func_examples/
       shell: bash

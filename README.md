@@ -1,17 +1,30 @@
-# ActionServerless - Use GitHub Actions to create a serverless service
+# GitFx - Create a serverless service in Git hosting
 
-[![ActionServerless Testing](https://github.com/gitx-io/ActionServerless/workflows/Test%20run%20funcs/badge.svg)](https://github.com/gitx-io/ActionServerless/blob/master/.github/workflows/test_run_funcs.yml)
+[![GitFx Testing](https://github.com/gitx-io/GitFx/workflows/Test%20run%20funcs/badge.svg)](https://github.com/gitx-io/GitFx/blob/master/.github/workflows/test_run_funcs.yml)
 
-ActionServerless is an action to do some computing and then generate a string/JSON file to a path, you can visit the file as a service when in dev/testing, or even in your production. We may take it as a GitHub Actions powered `serverless` service.
+GitFx can be used to run some functions and serve the output as a service in a Git hosting.
 
-In fact you can do all of these in native GitHub actions. ActionServerless just wraps the steps to simplify the work:
+GitFx is a Python lib extracted from an action [ActionServerless](https://github.com/gitx-io/ActionServerless). And now the action uses this lib as a dependency to do the real job, you can run the lib locally in a same way as in the action.
 
-1. you can focus on coding the real logic, no need to care too much setup steps on the languages that ActionServerless supported(JS/Ruby/Python/Perl etc.). With [a template](https://github.com/gitx-io/ActionServerless-template) we provide, you even don't bother to edit the action workflow configuration.
-2. use the route grammer we defined to specify a path to store the generated string/JSON file, that makes the job easy and clear.
+## Prerequisites
 
-## Quick start
+* Python 3.5+
+* Docker
 
-At first [use the template](https://github.com/gitx-io/ActionServerless-template/generate) to create a repository. Then We start with a Python example:
+## Install
+
+```shell
+pip3 install gitfx
+
+# or
+python3 -m pip install gitfx
+```
+
+Note: Python 2 is not supported
+
+## Usage
+
+Let's start with a Python code that'll be used to create a serverless service:
 
 ```python
 # function.py
@@ -22,28 +35,37 @@ import json
 print(json.dumps({"hello": "world"}))
 ```
 
-put the file to a path(default is the root path of a repo, otherwise you need add the path as an argument to your actions configuaration),  when you push the code the action will be triggered. Then the program's output is written to a file located in `api/py_hello.json` that you defined as a route in the comment.
+put the program to a path under current directory, for example, `test` folder and run:
 
-more languages' examples you can find [here](https://github.com/gitx-io/ActionServerless/tree/master/test/func_samples).
+```shell
+python3 -m gitfx test/
+```
+
+then the program's output is written to a file located in `api/py_hello.json` that you defined as a route in the comment.
+
+You can use the [ActionServerless](https://github.com/gitx-io/ActionServerless) to run functions in GitHub, and also you can run locally as above example then push the generated files to the remote.
+
+more languages' examples you can find [here](https://github.com/gitx-io/GitFx/tree/master/test/func_examples).
+
 
 ## Languages supported
 
 | Language      | Dependency Installation | Example code                                                                               |
 | ------------- | -------------         | :------------:                                                                               |
-| Python        | ✅ `requirements.txt`   | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.py)      |
-| Ruby          | ✅ `Gemfile`            | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.rb)      |
-| Node.js       | ✅ `package.json`       | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.js)      |
-| Perl          | ✅ `cpanfile`           | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.pl)      |
-| Golang        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.go)      |
-| Haskell       | ⬜️ not supported yet    | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.hs)      |
-| Elixir        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.exs)     |
-| PHP           | ⬜️ not supported yet    | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.php)     |
-| Bash          | -                       | [See](https://github.com/gitx-io/ActionServerless/blob/master/test/func_samples/function.sh) |
+| Python        | ✅ `requirements.txt`   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.py)      |
+| Ruby          | ✅ `Gemfile`            | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.rb)      |
+| Node.js       | ✅ `package.json`       | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.js)      |
+| Perl          | ✅ `cpanfile`           | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.pl)      |
+| Golang        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.go)      |
+| Haskell       | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.hs)      |
+| Elixir        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.exs)     |
+| PHP           | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.php)     |
+| Bash          | -                       | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.sh) |
 
 ## Documents
 
-* [Pre-hook script](https://github.com/gitx-io/ActionServerless/wiki/Pre-hook-script)
-* [HTTP Headers](https://github.com/gitx-io/ActionServerless/wiki/HTTP-Headers)
+* [before_script](https://github.com/gitx-io/GitFx/wiki/before_script)
+* [HTTP Headers](https://github.com/gitx-io/GitFx/wiki/HTTP-Headers)
 
 ## Real world examples
 
