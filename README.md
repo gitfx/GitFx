@@ -50,17 +50,18 @@ more languages' examples you can find [here](https://github.com/gitx-io/GitFx/tr
 
 ## Languages supported
 
-| Language      | Dependency Installation | Example code                                                                               |
-| ------------- | -------------         | :------------:                                                                               |
-| Python        | ✅ `requirements.txt`   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.py)      |
-| Ruby          | ✅ `Gemfile`            | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.rb)      |
-| Node.js       | ✅ `package.json`       | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.js)      |
-| Perl          | ✅ `cpanfile`           | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.pl)      |
-| Golang        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.go)      |
-| Haskell       | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.hs)      |
-| Elixir        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.exs)     |
-| PHP           | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.php)     |
-| Bash          | -                       | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.sh) |
+| Language      | Dependency Installation | Example code                                                                           |
+| ------------- | -------------           | :------------:                                                                         |
+| Python        | ✅ `requirements.txt`   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.py)     |
+| Ruby          | ✅ `Gemfile`            | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.rb)     |
+| Node.js       | ✅ `package.json`       | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.js)     |
+| Perl          | ✅ `cpanfile`           | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.pl)     |
+| Golang        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.go)     |
+| Haskell       | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.hs)     |
+| Elixir        | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.exs)    |
+| PHP           | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.php)    |
+| Bash          | -                       | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.sh)     |
+| Rust          | ⬜️ not supported yet    | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.rs)     |
 
 ## Documents
 

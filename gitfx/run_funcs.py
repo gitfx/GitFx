@@ -16,6 +16,7 @@ SUPPORTED_LANGS = [
         'haskell',
         'php',
         'bash',
+        'rust',
         ]
 
 RUN_CMDS = {
@@ -27,6 +28,7 @@ RUN_CMDS = {
         'elixir': 'elixir',
         'haskell': 'runhaskell',
         'php': 'php',
+        'rust': 'perl -e \'($n = $ARGV[0]) =~ s/\.rs$//; system "rustc $ARGV[0] && ./$n && rm $n"\'',
         }
 
 DOCKER_IMAGES = {

@@ -44,6 +44,8 @@ jobs:
 
                bash_string
                bash.json
+
+               rust_string
               )
 
         status=0
