@@ -2,6 +2,7 @@ import os
 import subprocess
 
 from gitfx import parse_funcs
+from gitfx import lang_version
 
 
 ROOT_DIR = os.getenv('GITHUB_WORKSPACE', os.getcwd())
@@ -61,12 +62,15 @@ def run_fun(func_path, func):
         'node': '[ -f package.json ] && npm install --only=prod >/dev/null 2>&1',
         'perl': '[ -f cpanfile ] && cpanm --installdeps . >/dev/null 2>&1'}
 
+    # decide language version
+    version = lang_version.get_version(func_lang) or 'latest'
+
     if func_lang == 'bash':
         cmd = ["bash", os.path.join(func_path, func_file_name)]
     else:
         cmd = ['docker', 'run', '--rm', '--workdir', '/github/workspace',
                '-v', ROOT_DIR + ':/github/workspace',
-               docker_image(func_lang) + ':latest', 'sh', '-c',
+               docker_image(func_lang) + ':' + version, 'sh', '-c',
                "cd " + os.path.relpath(func_path, ROOT_DIR) + ";" +
                deps_install.get(func_lang, ':') + ";" +
                run_before_script + ";" +
