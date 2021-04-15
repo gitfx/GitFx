@@ -33,7 +33,6 @@ RUN_CMDS = {
         }
 
 DOCKER_IMAGES = {
-        'php': 'composer',
         }
 
 
@@ -60,7 +59,11 @@ def run_fun(func_path, func):
         'ruby': '[ -f Gemfile ] && bundle install >/dev/null 2>&1',
         'python': '[ -f requirements.txt ] && pip install -r requirements.txt >/dev/null 2>&1',
         'node': '[ -f package.json ] && npm install --only=prod >/dev/null 2>&1',
-        'perl': '[ -f cpanfile ] && cpanm --installdeps . >/dev/null 2>&1'}
+        'perl': '[ -f cpanfile ] && cpanm --installdeps . >/dev/null 2>&1',
+        'php': '[ -f composer.json ] && \
+                curl -sS https://getcomposer.org/installer -o composer-setup.php && \
+                php composer-setup.php --install-dir=/usr/local/bin --filename=composer >/dev/null 2>&1 && \
+                php composer.phar install >/dev/null 2>&1'}
 
     # decide language version
     version = lang_version.get_version(func_lang) or 'latest'

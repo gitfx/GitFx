@@ -56,7 +56,7 @@ more languages' examples you can find [here](https://github.com/gitx-io/GitFx/tr
 | Ruby          | ✅ `Gemfile`            | ✅ `.ruby-version` [rvm](https://rvm.io/)/[rbenv](https://github.com/rbenv/rbenv) | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.rb)  |
 | Node.js       | ✅ `package.json`       | ✅ `.nvmrc` [nvm](https://github.com/nvm-sh/nvm) | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.js)  |
 | Perl          | ✅ `cpanfile`           | ✅ `.perl-version` [plenv](https://github.com/tokuhirom/plenv) | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.pl)  |
-| PHP           | ⬜️                      | ✅ `.phpenv-version` [phpenv](https://github.com/phpenv/phpenv) | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.php) |
+| PHP           | ✅ `composer.json`      | ✅ `.phpenv-version` [phpenv](https://github.com/phpenv/phpenv) | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.php) |
 | Golang        | ⬜️                      | ⬜️                   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.go)  |
 | Haskell       | ⬜️                      | ⬜️                   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.hs)  |
 | Elixir        | ⬜️                      | ⬜️                   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.exs) |
