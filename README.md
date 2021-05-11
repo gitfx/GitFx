@@ -1,6 +1,7 @@
 # GitFx - Create a serverless service in Git hosting
 
 [![GitFx Testing](https://github.com/gitx-io/GitFx/workflows/Test%20run%20funcs/badge.svg)](https://github.com/gitx-io/GitFx/blob/master/.github/workflows/test_run_funcs.yml)
+[![GitFx Lint](https://github.com/gitx-io/GitFx/workflows/Lint/badge.svg)](https://github.com/gitx-io/GitFx/blob/master/.github/workflows/linter.yml)
 
 GitFx can be used to run some functions and serve the output as a service in a Git hosting.
 
