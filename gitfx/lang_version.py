@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# coding=utf-8
+# https://github.com/gitx-io/GitFx
+
+"""Detect and get language version if exists."""
+
 import os
 
 

@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# coding=utf-8
+# https://github.com/gitx-io/GitFx
+
+"""The main program to run functions."""
+
 import os
 import subprocess
 

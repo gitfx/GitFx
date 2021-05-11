@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+# coding=utf-8
+# https://github.com/gitx-io/GitFx
+
+"""Parse function code to get function info."""
+
 import os
 import sys
 import re
