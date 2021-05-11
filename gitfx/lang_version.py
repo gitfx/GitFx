@@ -1,13 +1,11 @@
 import os
 
 
-LANG_VERSION_FILES = {
-        'python': '.python-version',   # pyenv
-        'ruby': '.ruby-version',       # rvm/rbenv
-        'perl': '.perl-version',       # plenv
-        'node': '.nvmrc',              # nvm
-        'php': '.phpenv-version',      # phpenv
-        }
+LANG_VERSION_FILES = {'python': '.python-version',   # pyenv
+                      'ruby': '.ruby-version',       # rvm/rbenv
+                      'perl': '.perl-version',       # plenv
+                      'node': '.nvmrc',              # nvm
+                      'php': '.phpenv-version'}      # phpenv
 
 
 def read_first_line(ver_file):
@@ -19,6 +17,7 @@ def read_first_line(ver_file):
         if line:
             line = line.strip()
         return line
+
 
 def get_version(lang):
     if lang not in LANG_VERSION_FILES:

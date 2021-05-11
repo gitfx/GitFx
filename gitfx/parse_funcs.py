@@ -5,31 +5,27 @@ import json
 from glob import glob
 
 
-EXT_LANG = {
-        '.py': 'python',
-        '.rb': 'ruby',
-        '.pl': 'perl',
-        '.go': 'golang',
-        '.js': 'node',
-        '.hs': 'haskell',
-        '.exs': 'elixir',
-        '.php': 'php',
-        '.sh': 'bash',
-        '.rs': 'rust',
-        }
+EXT_LANG = {'.py': 'python',
+            '.rb': 'ruby',
+            '.pl': 'perl',
+            '.go': 'golang',
+            '.js': 'node',
+            '.hs': 'haskell',
+            '.exs': 'elixir',
+            '.php': 'php',
+            '.sh': 'bash',
+            '.rs': 'rust'}
 
-COMMENT_PREFIX = {
-        'python': '#',
-        'ruby': '#',
-        'perl': '#',
-        'golang': '//',
-        'node': '//',
-        'haskell': '--',
-        'elixir': '#',
-        'php': '//',
-        'bash': '#',
-        'rust': '//',
-        }
+COMMENT_PREFIX = {'python': '#',
+                  'ruby': '#',
+                  'perl': '#',
+                  'golang': '//',
+                  'node': '//',
+                  'haskell': '--',
+                  'elixir': '#',
+                  'php': '//',
+                  'bash': '#',
+                  'rust': '//'}
 
 
 def get_language(extension):
@@ -58,16 +54,18 @@ def parse(path):
     os.chdir(path)
 
     result = []
-    files = glob('*.rb') + \
-            glob('*.py') + \
-            glob('*.go') + \
-            glob('*.js') + \
-            glob('*.pl') + \
-            glob('*.hs') + \
-            glob('*.exs') + \
-            glob('*.php') + \
-            glob('*.sh') + \
-            glob('*.rs')
+    types = ('*.rb',    # Ruby
+             '*.py',    # Python
+             '*.go',    # Golang
+             '*.js',    # Node.js
+             '*.pl',    # Perl
+             '*.hs',    # haskell
+             '*.exs',   # Elixir
+             '*.php',   # PHP
+             '*sh',     # Bash
+             '*.rs')    # Rust
+
+    files = [f for fs in [glob(t) for t in types] for f in fs]
 
     for f in files:
         ext_name = os.path.splitext(f)[1]

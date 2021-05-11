@@ -1,6 +1,6 @@
 import json
 # import but not used, just for testing package installation
-import openpyxl
+import openpyxl  # noqa
 
 # GET /test/result/python.json
 

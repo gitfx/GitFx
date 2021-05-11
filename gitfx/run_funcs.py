@@ -7,39 +7,35 @@ from gitfx import lang_version
 
 ROOT_DIR = os.getenv('GITHUB_WORKSPACE', os.getcwd())
 
-SUPPORTED_LANGS = [
-        'ruby',
-        'python',
-        'perl',
-        'node',
-        'golang',
-        'elixir',
-        'haskell',
-        'php',
-        'bash',
-        'rust',
-        ]
+SUPPORTED_LANGS = ['ruby',
+                   'python',
+                   'perl',
+                   'node',
+                   'golang',
+                   'elixir',
+                   'haskell',
+                   'php',
+                   'bash',
+                   'rust']
 
-RUN_CMDS = {
-        'ruby': 'ruby',
-        'python': 'python',
-        'node': 'node',
-        'perl': 'perl',
-        'golang': 'go run',
-        'elixir': 'elixir',
-        'haskell': 'runhaskell',
-        'php': 'php',
-        'rust': 'perl -e \'($n = $ARGV[0]) =~ s/\.rs$//; system "rustc $ARGV[0] && ./$n && rm $n"\'',
-        }
+RUN_CMDS = {'ruby': 'ruby',
+            'python': 'python',
+            'node': 'node',
+            'perl': 'perl',
+            'golang': 'go run',
+            'elixir': 'elixir',
+            'haskell': 'runhaskell',
+            'rust': 'perl -e \'($n = $ARGV[0]) =~ s/\.rs$//; system "rustc $ARGV[0] && ./$n && rm $n"\'', # noqa
+            'php': 'php'}
 
-DOCKER_IMAGES = {
-        }
+DOCKER_IMAGES = {}
 
 
 def docker_image(lang):
     """you can specify a docker image name for a language,
     otherwise the language name will be returned as the image name"""
     return DOCKER_IMAGES.get(lang, lang)
+
 
 def run_fun(func_path, func):
     func_lang = func['language']
@@ -74,13 +70,14 @@ def run_fun(func_path, func):
         cmd = ['docker', 'run', '--rm', '--workdir', '/github/workspace',
                '-v', ROOT_DIR + ':/github/workspace',
                docker_image(func_lang) + ':' + version, 'sh', '-c',
-               "cd " + os.path.relpath(func_path, ROOT_DIR) + ";" +
-               deps_install.get(func_lang, ':') + ";" +
-               run_before_script + ";" +
+               "cd " + os.path.relpath(func_path, ROOT_DIR) + ";" +        # noqa
+               deps_install.get(func_lang, ':') + ";" +                    # noqa
+               run_before_script + ";" +                                   # noqa
                RUN_CMDS[func_lang] + " " + func_file_name]
 
     output = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
     return output.decode("utf8")
+
 
 def write_to_route(result, func_route):
     if func_route.strip() == '':
@@ -96,6 +93,7 @@ def write_to_route(result, func_route):
     f.close()
 
     print_github_raw_url(func_route)
+
 
 def print_github_raw_url(file_path):
     repo_name = os.getenv('GITHUB_REPOSITORY')
