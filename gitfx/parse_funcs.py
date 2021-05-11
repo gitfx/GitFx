@@ -59,7 +59,7 @@ def parse(path):
              '*.go',    # Golang
              '*.js',    # Node.js
              '*.pl',    # Perl
-             '*.hs',    # haskell
+             '*.hs',    # Haskell
              '*.exs',   # Elixir
              '*.php',   # PHP
              '*sh',     # Bash
