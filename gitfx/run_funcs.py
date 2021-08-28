@@ -113,11 +113,17 @@ def print_github_raw_url(file_path):
         print(raw_url)
 
 
-def run(func_path):
-    if not func_path:
+def run(*func_paths):
+    if not func_paths:
         func_path = ROOT_DIR
-    func_path = os.path.abspath(func_path)
+        do_run(func_path)
+    else:
+        for func_path in func_paths:
+            do_run(func_path)
 
+
+def do_run(func_path):
+    func_path = os.path.abspath(func_path)
     funcs = parse_funcs.parse(func_path)
 
     for func in funcs:

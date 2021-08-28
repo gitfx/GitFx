@@ -14,7 +14,7 @@ jobs:
     - name: Run funcs
       run: |
         python3 -m pip install .
-        python3 -m gitfx test/func_examples
+        python3 -m gitfx test/func_examples test/func_examples/a_nested_code_folder
     - name: Check if result files exist
       run: |
         cd test/result
@@ -46,6 +46,8 @@ jobs:
                bash.json
 
                rust_string
+
+               test_multi_code_folders
               )
 
         status=0

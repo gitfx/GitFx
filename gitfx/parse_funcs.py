@@ -57,7 +57,6 @@ def parse(path):
     if not path:
         print("no path provided")
         return
-    os.chdir(path)
 
     result = []
     types = ('*.rb',    # Ruby
@@ -71,10 +70,11 @@ def parse(path):
              '*sh',     # Bash
              '*.rs')    # Rust
 
-    files = [f for fs in [glob(t) for t in types] for f in fs]
+    files = [f for fs in [glob(os.path.join(path, t)) for t in types] for f in fs]
 
     for f in files:
-        ext_name = os.path.splitext(f)[1]
+        file_name = os.path.basename(f)
+        ext_name = os.path.splitext(file_name)[1]
         lang = get_language(ext_name)
 
         with open(f, 'r') as _f:
@@ -82,7 +82,7 @@ def parse(path):
             routes = get_routes(lines, lang)
             if not routes:
                 continue
-            result.append({'routes': routes, 'file_name': f, 'language': lang})
+            result.append({'routes': routes, 'file_name': file_name, 'language': lang})
 
     return result
 
