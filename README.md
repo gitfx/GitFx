@@ -40,6 +40,7 @@ put the program to a path under current directory, for example, `test` folder an
 
 ```shell
 python3 -m gitfx test/
+# you can pass more folders if you have
 ```
 
 then the program's output is written to a file located in `api/py_hello.json` that you defined as a route in the comment.
