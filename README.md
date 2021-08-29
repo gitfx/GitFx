@@ -77,6 +77,7 @@ more languages' examples you can find [here](https://github.com/gitx-io/GitFx/tr
 ## Real world examples
 
 * [Shell functions to get Docker image versions](https://github.com/gitx-io?q=docker-major-versions&type=public&language=shell&sort=name)
+* [Run examples for 30-Days-Of-Python tutorial](https://github.com/gitx-io/30-Days-Of-Python)
 
 ## Contributions
 
