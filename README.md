@@ -1,4 +1,4 @@
-# GitFx - Create a serverless service in Git hosting
+# GitFx - Create a Serverless service in Git hosting
 
 [![GitFx Testing](https://github.com/gitx-io/GitFx/workflows/Test%20run%20funcs/badge.svg)](https://github.com/gitx-io/GitFx/blob/master/.github/workflows/test_run_funcs.yml)
 [![GitFx Lint](https://github.com/gitx-io/GitFx/workflows/Lint/badge.svg)](https://github.com/gitx-io/GitFx/blob/master/.github/workflows/linter.yml)
@@ -25,7 +25,7 @@ Note: Python 2 is not supported
 
 ## Usage
 
-Let's start with a Python code that'll be used to create a serverless service:
+Let's start with a Python code that'll be used to create a Serverless service:
 
 ```python
 # function.py
