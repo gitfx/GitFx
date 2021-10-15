@@ -124,6 +124,9 @@ def run(*func_paths):
 
 def do_run(func_path):
     func_path = os.path.abspath(func_path)
+    if not os.path.isdir(func_path):
+        return
+
     funcs = parse_funcs.parse(func_path)
 
     for func in funcs:
