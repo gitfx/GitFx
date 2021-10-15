@@ -34,6 +34,20 @@ RUN_CMDS = {'ruby': 'ruby',
             'rust': 'perl -e \'($n = $ARGV[0]) =~ s/\.rs$//; system "rustc $ARGV[0] && ./$n && rm $n"\'', # noqa
             'php': 'php'}
 
+LANG_DEP_FILE = {'ruby': 'Gemfile',
+                 'python': 'requirements.txt',
+                 'node': 'package.json',
+                 'perl': 'cpanfile',
+                 'php': 'composer.json'}
+
+LANG_DEP_CMD = {'ruby': 'bundle install >/dev/null 2>&1',
+                'python': 'pip install -r requirements.txt >/dev/null 2>&1',
+                'node': 'npm install --only=prod >/dev/null 2>&1',
+                'perl': 'cpanm --installdeps . >/dev/null 2>&1',
+                'php': 'curl -sS https://getcomposer.org/installer -o composer-setup.php && \
+                        php composer-setup.php --install-dir=/usr/local/bin --filename=composer >/dev/null 2>&1 && \
+                        php composer.phar install >/dev/null 2>&1'}
+
 DOCKER_IMAGES = {}
 
 
@@ -41,6 +55,16 @@ def docker_image(lang):
     """you can specify a docker image name for a language,
     otherwise the language name will be returned as the image name"""
     return DOCKER_IMAGES.get(lang, lang)
+
+
+def deps_install_cmd(lang, func_path):
+    if lang not in LANG_DEP_FILE.keys():
+        return ':'
+
+    if os.path.isfile(os.path.join(func_path, LANG_DEP_FILE[lang])):
+        return LANG_DEP_CMD[lang]
+    else:
+        return ':'
 
 
 def run_fun(func_path, func):
@@ -55,17 +79,10 @@ def run_fun(func_path, func):
     # the function file but ends with '.sh',
     # will be run before the function running
     before_script_file = func_file_name + '.sh'
-    run_before_script = '[ -f {0} ] && sh {0} >/dev/null 2>&1'.format(before_script_file)
-
-    deps_install = {
-        'ruby': '[ -f Gemfile ] && bundle install >/dev/null 2>&1',
-        'python': '[ -f requirements.txt ] && pip install -r requirements.txt >/dev/null 2>&1',
-        'node': '[ -f package.json ] && npm install --only=prod >/dev/null 2>&1',
-        'perl': '[ -f cpanfile ] && cpanm --installdeps . >/dev/null 2>&1',
-        'php': '[ -f composer.json ] && \
-                curl -sS https://getcomposer.org/installer -o composer-setup.php && \
-                php composer-setup.php --install-dir=/usr/local/bin --filename=composer >/dev/null 2>&1 && \
-                php composer.phar install >/dev/null 2>&1'}
+    if os.path.isfile(os.path.join(func_path, before_script_file)):
+        run_before_script = './{} >/dev/null 2>&1'.format(before_script_file)
+    else:
+        run_before_script = ':'
 
     # decide language version
     version = lang_version.get_version(func_lang) or 'latest'
@@ -76,9 +93,9 @@ def run_fun(func_path, func):
         cmd = ['docker', 'run', '--rm', '--workdir', '/github/workspace',
                '-v', ROOT_DIR + ':/github/workspace',
                docker_image(func_lang) + ':' + version, 'sh', '-c',
-               "cd " + os.path.relpath(func_path, ROOT_DIR) + ";" +        # noqa
-               deps_install.get(func_lang, ':') + ";" +                    # noqa
-               run_before_script + ";" +                                   # noqa
+               "cd " + os.path.relpath(func_path, ROOT_DIR) + " && " +        # noqa
+               deps_install_cmd(func_lang, func_path) + " && " +                    # noqa
+               run_before_script + " && " +                                   # noqa
                RUN_CMDS[func_lang] + " " + func_file_name]
 
     output = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
