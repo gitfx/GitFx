@@ -5,6 +5,7 @@
 """Detect and get language version if exists."""
 
 import os
+import sys
 
 
 LANG_VERSION_FILES = {'python': '.python-version',   # pyenv
@@ -25,9 +26,14 @@ def read_first_line(ver_file):
         return line
 
 
-def get_version(lang):
+def get_version(func_path, lang):
     if lang not in LANG_VERSION_FILES:
         return ''
-    ver_file = LANG_VERSION_FILES[lang]
+    ver_file = os.path.join(func_path, LANG_VERSION_FILES[lang])
     version = read_first_line(ver_file)
     return version
+
+
+if __name__ == "__main__":
+    version = get_version(sys.argv[1], sys.argv[2])
+    print(version)

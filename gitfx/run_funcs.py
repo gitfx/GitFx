@@ -85,7 +85,7 @@ def run_fun(func_path, func):
         run_before_script = ':'
 
     # decide language version
-    version = lang_version.get_version(func_lang) or 'latest'
+    version = lang_version.get_version(func_path, func_lang) or 'latest'
 
     if func_lang == 'bash':
         cmd = ["bash", os.path.join(func_path, func_file_name)]
