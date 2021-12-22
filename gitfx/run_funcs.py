@@ -5,6 +5,7 @@
 """The main program to run functions."""
 
 import os
+import sys
 import subprocess
 
 from gitfx import parse_funcs
@@ -12,6 +13,7 @@ from gitfx import lang_version
 
 
 ROOT_DIR = os.getenv('GITHUB_WORKSPACE', os.getcwd())
+WRITE_MODE = os.getenv('GITFX_WRITE_MODE', 'overwrite')
 
 SUPPORTED_LANGS = ['ruby',
                    'python',
@@ -87,16 +89,19 @@ def run_fun(func_path, func):
     # decide language version
     version = lang_version.get_version(func_path, func_lang) or 'latest'
 
-    if func_lang == 'bash':
-        cmd = ["bash", os.path.join(func_path, func_file_name)]
-    else:
-        cmd = ['docker', 'run', '--rm', '--workdir', '/github/workspace',
-               '-v', ROOT_DIR + ':/github/workspace',
-               docker_image(func_lang) + ':' + version, 'sh', '-c',
-               "cd " + os.path.relpath(func_path, ROOT_DIR) + " && " +        # noqa
-               deps_install_cmd(func_lang, func_path) + " && " +                    # noqa
-               run_before_script + " && " +                                   # noqa
-               RUN_CMDS[func_lang] + " " + func_file_name]
+    try:
+        if func_lang == 'bash':
+            cmd = ["bash", os.path.join(func_path, func_file_name)]
+        else:
+            cmd = ['docker', 'run', '--rm', '--workdir', '/github/workspace',
+                   '-v', ROOT_DIR + ':/github/workspace',
+                   docker_image(func_lang) + ':' + version, 'sh', '-c',
+                   "cd " + os.path.relpath(func_path, ROOT_DIR) + " && " +        # noqa
+                   deps_install_cmd(func_lang, func_path) + " && " +                    # noqa
+                   run_before_script + " && " +                                   # noqa
+                   RUN_CMDS[func_lang] + " " + func_file_name]
+    except:
+        sys.exit(1)
 
     output = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
     return output.decode("utf8")
@@ -111,7 +116,10 @@ def write_to_route(result, func_route):
         os.makedirs(dst_dir)
 
     file_path = os.path.join(ROOT_DIR, func_route)
-    f = open(file_path, 'w')
+    if os.path.isfile(file_path) and WRITE_MODE == 'append':
+        f = open(file_path, 'a')
+    else:
+        f = open(file_path, 'w')
     f.write(result)
     f.close()
 
