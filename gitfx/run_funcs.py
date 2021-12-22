@@ -97,10 +97,11 @@ def run_fun(func_path, func):
                    '-v', ROOT_DIR + ':/github/workspace',
                    docker_image(func_lang) + ':' + version, 'sh', '-c',
                    "cd " + os.path.relpath(func_path, ROOT_DIR) + " && " +        # noqa
-                   deps_install_cmd(func_lang, func_path) + " && " +                    # noqa
+                   deps_install_cmd(func_lang, func_path) + " && " +              # noqa
                    run_before_script + " && " +                                   # noqa
                    RUN_CMDS[func_lang] + " " + func_file_name]
-    except:
+    except BaseException as error:
+        print('Exit on an error: {}'.format(error))
         sys.exit(1)
 
     output = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
