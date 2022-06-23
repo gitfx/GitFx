@@ -64,6 +64,7 @@ more languages' examples you can find [here](https://github.com/gitx-io/GitFx/tr
 | Elixir        | ⬜️                      | ⬜️                   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.exs) |
 | Bash          | --                      | --                   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.sh)  |
 | Rust          | ⬜️                      | ⬜️                   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.rs)  |
+| Deno          | --                      | ⬜️                   | [See](https://github.com/gitx-io/GitFx/blob/master/test/func_examples/function.ts)  |
 
 * ✅  Feature supported
 * ⬜  Feature not supported yet

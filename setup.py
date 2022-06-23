@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="GitFx",
-    version="0.0.7",
+    version="0.0.8",
     author="B1nj0y",
     author_email="idegorepl@gmail.com",
     description="Create a Serverless service in Git hosting",
