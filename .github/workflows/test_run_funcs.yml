@@ -48,6 +48,8 @@ jobs:
                rust_string
 
                test_multi_code_folders
+
+               deno_string
               )
 
         status=0

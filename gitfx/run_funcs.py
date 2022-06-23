@@ -24,6 +24,7 @@ SUPPORTED_LANGS = ['ruby',
                    'haskell',
                    'php',
                    'bash',
+                   'deno',
                    'rust']
 
 RUN_CMDS = {'ruby': 'ruby',
@@ -34,6 +35,7 @@ RUN_CMDS = {'ruby': 'ruby',
             'elixir': 'elixir',
             'haskell': 'runhaskell',
             'rust': 'perl -e \'($n = $ARGV[0]) =~ s/\.rs$//; system "rustc $ARGV[0] && ./$n && rm $n"\'', # noqa
+            'deno': 'deno run --quiet --allow-all',
             'php': 'php'}
 
 LANG_DEP_FILE = {'ruby': 'Gemfile',
@@ -50,7 +52,7 @@ LANG_DEP_CMD = {'ruby': 'bundle install >/dev/null 2>&1',
                         php composer-setup.php --install-dir=/usr/local/bin --filename=composer >/dev/null 2>&1 && \
                         php composer.phar install >/dev/null 2>&1'}
 
-DOCKER_IMAGES = {}
+DOCKER_IMAGES = {'deno': 'denoland/deno'}
 
 
 def docker_image(lang):

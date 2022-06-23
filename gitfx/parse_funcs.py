@@ -20,6 +20,7 @@ EXT_LANG = {'.py': 'python',
             '.exs': 'elixir',
             '.php': 'php',
             '.sh': 'bash',
+            '.ts': 'deno',
             '.rs': 'rust'}
 
 COMMENT_PREFIX = {'python': '#',
@@ -31,6 +32,7 @@ COMMENT_PREFIX = {'python': '#',
                   'elixir': '#',
                   'php': '//',
                   'bash': '#',
+                  'deno': '//',
                   'rust': '//'}
 
 
@@ -68,6 +70,7 @@ def parse(path):
              '*.exs',   # Elixir
              '*.php',   # PHP
              '*sh',     # Bash
+             '*.ts',    # Deno
              '*.rs')    # Rust
 
     files = [f for fs in [glob(os.path.join(path, t)) for t in types] for f in fs]
